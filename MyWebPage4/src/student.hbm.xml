@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+  
+ <hibernate-mapping>  
+ <class name="com.MyWebPage4.SOAP.StudentEntity" table="StudentTable">  
+ <id name="SerialId" column="Serial_id">  
+ <generator class="increment"></generator>  
+ </id>  
+ 	<property name="firstName" column="FirstName"></property> 
+	<property name="lastName" column="LastName"></property>
+	<property name="streetAddress" column="StreetAddress"></property>
+	<property name="city" column="City"></property>
+	<property name="state" column="State"></property>
+	<property name="zip" column="Zip"></property>
+	<property name="telephoneNumber" column="Telephone"></property>
+	<property name="email" column="Email"></property>
+	<property name="date" column="SurveyDate"></property>
+	<!-- <property name="check" column="Check"></property> -->
+	<property name="radio" column="Radio"></property>
+	<property name="menu" column="Menu"></property>
+	<property name="raffle" column="Raffle"></property>
+	<property name="comments" column="Comments"></property>
+	<property name="startdate" column="StartDate"></property>  
+ </class>  
+         
+ </hibernate-mapping>  

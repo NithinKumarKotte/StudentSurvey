@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!-- Nithin Kumar Kotte G01035945-->
+
+<!-- This XHTML form lists out all the survey record conducted till date, To get updated content. always 
+click on button "Click here to List all Surveys" It also allows us to navigate to web page
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:h="http://xmlns.jcp.org/jsf/html"
+	        xmlns:f="http://xmlns.jcp.org/jsf/core"
+	        xmlns:ui="http://java.sun.com/jsf/facelets"
+	        xmlns:p="http://primefaces.org/ui">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>List of Surveys</title>
+</head>
+<h:body style="background-color:powderblue">
+<h:form>
+<p>Click here for Main web page: <a href="/MyWebPage4/WebPage.html"> Go to main web page</a></p>
+	<center>
+	<h1> List of Survey Records</h1>
+		<br />
+		<p:commandButton  id="List" value=" Click here to List all Surveys" action="#{student.ListSurveys}" ajax="false"></p:commandButton>
+		<br></br>
+		<h:dataTable value="#{student.listofsurvey}" var="user" border="1" binding="#{table}">
+			<h:column>
+				<f:facet name="header">List Numbers</f:facet>
+  				 <h:outputText value ="#{table.rowIndex + 1}"></h:outputText> <br/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Contents of list</f:facet>
+
+  				 <h:outputText value="#{user}" /> <br />
+			</h:column>
+			
+		</h:dataTable>
+	
+	</center>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- Nithin Kumar Kotte G01035945 -->
+
+<!--Below depicted is an XHTML form which can be used to conduct survey about students and their experience
+about university.It has zip field linked to RestWebServices and is implemented with Primefaces with required
+validations This Form is linked with "Webpage.html" -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Student Survey Form</title>
+</h:head>
+<h:body style="background-color:powderblue" >
+	<h:form>
+		<center>
+		<h1>Student Survey Form</h1>
+		<p:message   for="firstname" errorStyle="color:red; display:block"/>
+		<p:message   for="Lastname" errorStyle="color:red; display:block"/>
+		<p:message  for="street" errorStyle="color:red; display:block"/>
+		<p:message  for="zip" errorStyle="color:red; display:block"/>
+		<p:message  for="telephone" errorStyle="color:red; display:block"/>
+		<p:message  for="email" errorStyle="color:red; display:block"/>
+		<p:message  for="raffle" errorStyle="color:red; display:block"/>
+		<p:message  for="dateInput" errorStyle="color:red; display:block"/>
+		<p:message  for="startdate" errorStyle="color:red; display:block"/>
+		<p:message  for="comments" errorStyle="color:red; display:block"/>
+		<p:message  for="city" errorStyle="color:red; display:block"/>
+		<p:message  for="state" errorStyle="color:red; display:block"/>
+		
+		
+		<h:panelGrid columns="2" style="height:96px; width:456px;">
+		First Name:<br></br>
+		<p:inputText id="firstname" value="#{student.firstName}" required="true" requiredMessage="Please enter name ">
+		<f:validator validatorId = "NameValidation" />
+		</p:inputText>
+		
+		
+		Last Name:<br></br>
+		<p:inputText id="Lastname" value="#{student.lastName}" required="true" requiredMessage="Please enter name ">
+		<f:validator validatorId = "NameValidation" />
+		</p:inputText>
+		
+
+		Street  address:<br></br>
+		<p:inputText id="street" value="#{student.streetAddress}"  required="true" requiredMessage="Enter street address" validatorMessage="Please enter address having less than 30 characters and has only numbers, alphabets">
+		<f:validator validatorId = "AddressValidation"/>
+		<f:validateLength maximum="30"></f:validateLength>
+		</p:inputText>
+		
+		Zip:<br></br>
+		<p:inputText id="zip" value="#{student.zip}" required="true" validatorMessage="Please enter zip code of exactly 5 numbers" requiredMessage="Enter Zip">
+		<!--  <f:ajax render="state city" execute="@this" event="keyup"></f:ajax>-->
+		<p:ajax listener="#{student.ajaxEvent}" update="state city"  event="keyup" execute="@all"></p:ajax>
+		<f:validateLength minimum="5" maximum="5"></f:validateLength>
+		</p:inputText>
+		
+		
+
+		City:<br></br>
+		<p:inputText id="city" value="#{student.city}" required="true" validatorMessage="Insert correct city" requiredMessage="Enter City">
+		<f:validateRegex pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" />
+		</p:inputText>
+		
+		State:<br></br>
+		<p:inputText id="state" value="#{student.state}" required="true" validatorMessage="Insert correct city" requiredMessage="Enter City">
+		<f:validateRegex pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" />
+		</p:inputText>
+		
+		telephone:<br></br>
+		<p:inputMask id="telephone" mask="(999)999-9999" value="#{student.telephoneNumber}" required="true" validatorMessage="Incorrect phone pattern use (xxx)xxx-xxxx" requiredMessage="Enter telephone number"></p:inputMask>
+		
+		<!--  <h:inputText id="telephone" value="#{student.telephoneNumber}" required="true" validatorMessage="Incorrect phone pattern use (xxx)xxx-xxxx" requiredMessage="Enter telephone number">
+		<f:validateRegex pattern="(\([0-9]{3}\)|[1-9]{0,3})(?:((?:)[0-9]{3}(?: |\-)[0-9]{4}))" />
+		</h:inputText> -->
+		email:<br></br>
+		<p:inputText id="email" value="#{student.email}" required="true" validatorMessage="Incorrect e-mail pattern" requiredMessage="Enter email">
+		<f:validateRegex pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z](?:[a-zA-Z]{0,2}[a-zA-Z])?)"></f:validateRegex>
+		</p:inputText>	
+
+		  date of survey:<br></br><br></br>
+		<!--   <h:inputText id = "dateInput" label = "Date" value="#{student.date}"  validatorMessage="Incorrect date pattern use mm/dd/yyyy format" required="true" requiredMessage="Enter date">-->
+			<p:calendar id="dateInput" value="#{student.date}" binding="#{date}"
+			mode="popup" pattern="MM/dd/yyyy" required="true" requiredMessage="Enter date"></p:calendar>
+			
+			 <!-- <f:validateRegex pattern="^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$"></f:validateRegex>
+	 </h:inputText>  -->
+	 
+	 	Start date of semester:<br></br><br></br>
+	 	<p:calendar id="startdate" value="#{student.startdate}" 
+	 	mode="popup" pattern="MM/dd/yyyy" validator="#{student.validateBidAmount}"
+	 	required="true" requiredMessage="Enter date">
+	 	<f:attribute name="date" value="#{date}" ></f:attribute>
+	 	<!-- <f:validator validatorId="DateValidation"></f:validator> -->
+	 	</p:calendar>
+	
+		What do you like most about campus:<br></br>
+		<p:selectManyCheckbox id="checkbox" value="#{student.check}" required="true" requiredMessage="click checkbox" >
+            <f:selectItem itemValue = "Students" itemLabel = "Students" />
+            <f:selectItem itemValue = "Location" itemLabel = "Location" />
+            <f:selectItem itemValue = "Campus" itemLabel = "Campus" />
+            <f:selectItem itemValue = "Atmosphere" itemLabel = "Atmosphere" />
+            <f:selectItem itemValue = "Dorm rooms" itemLabel = "Dorm rooms" />
+            <f:selectItem itemValue = "Sports" itemLabel = "Sports" />
+         </p:selectManyCheckbox>
+         
+         How did you become interested about university.<br></br><br></br>
+         
+         <p:selectOneRadio id="radio"	value="#{student.radio}" required="true" requiredMessage="click radio buttons"> 
+   			<f:selectItem itemValue = "Friends" itemLabel = "Friends" /> 
+   			<f:selectItem itemValue = "Television" itemLabel = "Television" />
+   			<f:selectItem itemValue = "Internet" itemLabel = "Internet" /> 
+   			<f:selectItem itemValue = "Others" itemLabel = "Others" />
+		</p:selectOneRadio> 
+		
+		Would you recommend this school to others?<br></br><br></br>
+		<p:autoComplete  value="#{student.menu}" forceSelection="true" minQueryLength="1" completeMethod="#{student.autocmp}" 
+		required="true" requiredMessage="Missed out on drop down menu, select any one "></p:autoComplete>
+		
+	<!-- <h:selectOneMenu id="menu"  value="#{student.menu}" required="true" requiredMessage="Missed out on drop down menu, select any one "> 
+ 		  	<f:selectItem itemValue = "Very Likely" itemLabel = "Very Likely" /> 
+   			<f:selectItem itemValue = "Likely" itemLabel = "Likely" /> 
+   			<f:selectItem itemValue = "unlikely" itemLabel = "unlikely" /> 
+   		</h:selectOneMenu>   -->	
+   		
+   		Raffle:<br></br><br></br>
+   		<p:inputText id="raffle" value="#{student.raffle}" required="true" requiredMessage="Enter raffle numbers">
+   		<f:validator validatorId = "RaffleValidator" />
+   		</p:inputText>	
+   		
+   		Comments:<br></br><br></br>
+   		<p:inputText id="comments" value="#{student.comments}" required="true" requiredMessage="Enter comments"></p:inputText>	
+   		
+   		<p:commandButton id="submit-button" value="Submit" action="#{student.Submitform}" ajax="false" ></p:commandButton>
+   		<p:commandButton value="Cancel" type="reset" ajax="false">
+		</p:commandButton>
+   		
+		</h:panelGrid>
+
+	</center>
+
+	</h:form>
+</h:body>
+</html>
